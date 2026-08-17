@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "cockroachdb": {
+      "url": "https://cockroachlabs.cloud/mcp",
+      "headers": {
+        "Authorization": "Bearer ${COCKROACH_API_KEY}"
+      },
+      "note": "CockroachDB Cloud Managed MCP Server — connect agent tooling read-only by default. HIOP still mediates all mutating effects outside SQL memory writes."
+    }
+  },
+  "hiop_binding": {
+    "memory_writes_allowed": true,
+    "effect_execution_requires_hiop": true,
+    "invariant": "MCP memory access != effect authority"
+  }
+}

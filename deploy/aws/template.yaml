@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: HIOP Governed Agentic Memory — Lambda + optional S3 (staging)
+
+Parameters:
+  CrdbDsn:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: CockroachDB connection URI (postgres protocol)
+  ReceiptBucketName:
+    Type: String
+    Default: hiop-crdb-receipts-staging
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 60
+    MemorySize: 512
+
+Resources:
+  ReceiptBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ReceiptBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  GovernedAgentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: hiop-governed-agentic-memory
+      CodeUri: ../..
+      Handler: deploy.aws.handler.lambda_handler
+      Environment:
+        Variables:
+          CRDB_DSN: !Ref CrdbDsn
+          HIOP_MEMORY_MODE: cockroach
+          S3_RECEIPT_BUCKET: !Ref ReceiptBucketName
+          HIOP_PRODUCTION_CERTIFIED: "false"
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ReceiptBucketName
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /run
+            Method: post
+
+Outputs:
+  ApiUrl:
+    Description: Functional demo API endpoint
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/run"

@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: Hood Agent Memory API v1
+  version: 0.1.0
+  description: |
+    Contest-open surface for Hood Agent Memory v1.
+    Memory is information, not authority. Effects require HIOP mediation.
+    Does not expose proprietary Fair Value / Buy Score implementation.
+servers:
+  - url: http://localhost:8787
+    description: Local demo server
+  - url: https://{lambda-url}
+    description: AWS Lambda Function URL (after deploy)
+paths:
+  /v1/agent/memory:
+    post:
+      summary: Remember an agent episode
+      operationId: remember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RememberRequest'
+      responses:
+        '200':
+          description: Stored
+  /v1/agent/memory/search:
+    get:
+      summary: Semantic or kind-filtered memory search
+      operationId: searchMemory
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+        - name: kind
+          in: query
+          schema: { type: string }
+        - name: agent_id
+          in: query
+          schema: { type: string, default: ops-memory-agent }
+      responses:
+        '200':
+          description: Hits
+  /v1/agent/decision:
+    post:
+      summary: Propose an effect for HIOP authorization
+      operationId: decide
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: PERMIT | DENY | REQUIRE_APPROVAL
+  /v1/agent/action:
+    post:
+      summary: Execute only if prior decision was PERMIT
+      operationId: act
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionRequest'
+      responses:
+        '200':
+          description: Execution result
+  /v1/agent/receipt:
+    get:
+      summary: Fetch fossil receipt
+      operationId: getReceipt
+      parameters:
+        - name: receipt_id
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Receipt payload
+  /v1/agent/demo/sniper:
+    post:
+      summary: Run Sniper vertical demo (fixture intelligence)
+      operationId: sniperDemo
+      responses:
+        '200':
+          description: Full opportunity → memory → authority → receipt trail
+components:
+  schemas:
+    RememberRequest:
+      type: object
+      required: [agent_id, kind, content]
+      properties:
+        agent_id: { type: string }
+        tenant_id: { type: string, default: tenant-mission }
+        kind: { type: string }
+        content: { type: object }
+        text_for_embed: { type: string }
+    DecisionRequest:
+      type: object
+      required: [agent_id, tool]
+      properties:
+        agent_id: { type: string }
+        tool: { type: string }
+        params: { type: object }
+        prompt_claims: { type: object }
+        human_approve: { type: boolean, default: false }
+    ActionRequest:
+      type: object
+      required: [decision]
+      properties:
+        decision: { type: object }

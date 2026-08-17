@@ -1,0 +1,210 @@
+{
+  "ok": true,
+  "scenario_id": "sniper-demo-620",
+  "product": "HOOD-AGENT-MEMORY-V1",
+  "platform": "Hood Developer Agent Platform \u2014 Agent Infrastructure layer",
+  "demo_vertical": "Sniper \u2192 Memory \u2192 Authority \u2192 Receipt \u2192 Terminal view",
+  "production_access": false,
+  "listing": {
+    "card_id": "demo-psa10-charizard-base",
+    "title": "1999 Pokemon Base Set Charizard PSA 10 (DEMO FIXTURE)",
+    "ask_usd": 620,
+    "seller_id": "seller-demo-alpha",
+    "marketplace": "fixture-market",
+    "listed_at": "2026-08-17T00:00:00Z"
+  },
+  "intelligence_shape": {
+    "note": "Shape-compatible with Hood Developer intelligence \u2014 NOT proprietary model output from production",
+    "fair_value_usd": 810,
+    "buy_score": 82,
+    "liquidity": "high",
+    "confidence": 0.86,
+    "index_delta_7d_pct": 3.2,
+    "comparable_sales_count": 37,
+    "source": "fixture"
+  },
+  "trail": [
+    {
+      "step": "remember",
+      "kind": "seller_seen",
+      "result": {
+        "ok": true,
+        "episode_id": "82fb78bb-4287-4ac3-bb2c-778e7d470c4d",
+        "product": "HOOD-AGENT-MEMORY-V1"
+      }
+    },
+    {
+      "step": "remember",
+      "kind": "comparable_outcome",
+      "result": {
+        "ok": true,
+        "episode_id": "92708b47-ef7e-452c-a7e5-4d453440d688",
+        "product": "HOOD-AGENT-MEMORY-V1"
+      }
+    },
+    {
+      "step": "remember",
+      "kind": "prior_authorization_memory",
+      "result": {
+        "ok": true,
+        "episode_id": "5f566eff-954c-4c87-9f06-00318c9f66ad",
+        "product": "HOOD-AGENT-MEMORY-V1"
+      }
+    },
+    {
+      "step": "remember_listing",
+      "result": {
+        "ok": true,
+        "episode_id": "9b8b6a58-6eff-467c-870f-2ba3166a42b8",
+        "product": "HOOD-AGENT-MEMORY-V1"
+      }
+    },
+    {
+      "step": "memory_search",
+      "result": {
+        "hit_count": 4,
+        "vector_tool": {
+          "tool": "Distributed Vector Indexing",
+          "active": false,
+          "mode": "fixture_cosine_simulates_vector_index",
+          "last_query": {
+            "mode": "fixture_cosine_simulates_vector_index",
+            "query": "seller comparable charizard authorized 700",
+            "hits": 4,
+            "claim_distributed_vector_indexing": false,
+            "note": "fixture only \u2014 use CockroachMemoryStore for real VECTOR INDEX"
+          },
+          "claimable": false
+        }
+      }
+    },
+    {
+      "step": "decision_analyze",
+      "decision": {
+        "outcome": "PERMIT",
+        "code": "permit",
+        "reason": "observe_tier",
+        "agent_id": "ops-memory-agent",
+        "owner": "owner-mission",
+        "tenant_id": "tenant-mission",
+        "effect_id": "telemetry.analyze",
+        "tool_name": "telemetry.analyze",
+        "params": {
+          "streams": [
+            "market"
+          ]
+        },
+        "production_certified": false,
+        "receipt_id": "rcpt-3878fb24a491",
+        "skill_id": "hiop-governed-memory",
+        "skill_stripped_memory_claims": true
+      }
+    },
+    {
+      "step": "action_analyze",
+      "execution": {
+        "ok": true,
+        "executed": true,
+        "mode": "SIMULATED",
+        "effect_id": "telemetry.analyze",
+        "result": "SIMULATED_FIRE:telemetry.analyze",
+        "production_certified": false,
+        "receipt": {
+          "outcome": "EXECUTED",
+          "agent_id": "ops-memory-agent",
+          "effect_id": "telemetry.analyze",
+          "decision_receipt_id": "rcpt-3878fb24a491",
+          "mode": "SIMULATED",
+          "receipt_id": "rcpt-58f6d67039aa",
+          "ts": 1786939484.2540364,
+          "production_certified": false
+        }
+      }
+    },
+    {
+      "step": "decision_offer_700_remembered_yesterday",
+      "decision": {
+        "outcome": "DENY",
+        "code": "policy_max_offer",
+        "message": "Offer 700.0 exceeds policy max 675.0",
+        "agent_id": "ops-memory-agent",
+        "effect_id": "market.offer_submit",
+        "tool_name": "market.offer_submit",
+        "skill_id": "hiop-governed-memory",
+        "receipt_id": "rcpt-0baaa9bbcbbd"
+      },
+      "invariant": "Remembered yesterday $700 does not authorize $700 today"
+    },
+    {
+      "step": "decision_offer_650",
+      "decision": {
+        "outcome": "PERMIT",
+        "code": "permit",
+        "reason": "policy_envelope",
+        "agent_id": "ops-memory-agent",
+        "owner": "owner-mission",
+        "tenant_id": "tenant-mission",
+        "effect_id": "market.offer_submit",
+        "tool_name": "market.offer_submit",
+        "params": {
+          "offer_usd": 650,
+          "max_offer_usd": 675,
+          "card_id": "demo-psa10-charizard-base",
+          "ask_usd": 620,
+          "fair_value_usd": 810,
+          "buy_score": 82
+        },
+        "production_certified": false,
+        "receipt_id": "rcpt-6dded6eb3e79",
+        "skill_id": "hiop-governed-memory",
+        "skill_stripped_memory_claims": true
+      }
+    },
+    {
+      "step": "action_offer_650",
+      "execution": {
+        "ok": true,
+        "executed": true,
+        "mode": "SIMULATED",
+        "effect_id": "market.offer_submit",
+        "result": "SIMULATED_FIRE:market.offer_submit",
+        "production_certified": false,
+        "receipt": {
+          "outcome": "EXECUTED",
+          "agent_id": "ops-memory-agent",
+          "effect_id": "market.offer_submit",
+          "decision_receipt_id": "rcpt-6dded6eb3e79",
+          "mode": "SIMULATED",
+          "receipt_id": "rcpt-2b541dc80d30",
+          "ts": 1786939484.2540364,
+          "production_certified": false
+        }
+      }
+    }
+  ],
+  "terminal_view": {
+    "surface": "Hood Terminal (demo JSON \u2014 not production UI)",
+    "listing_ask": 620,
+    "fair_value": 810,
+    "buy_score": 82,
+    "policy_max_offer": 675,
+    "proposed": 650,
+    "remembered_700_decision": "DENY",
+    "offer_650_decision": "PERMIT",
+    "receipt_id": "rcpt-2b541dc80d30",
+    "memory_backend": "in_memory_fixture",
+    "product": "HOOD-AGENT-MEMORY-V1"
+  },
+  "cockroach_tools": [
+    {
+      "name": "Agent Skills Repo",
+      "claimable": true
+    },
+    {
+      "name": "Distributed Vector Indexing",
+      "claimable": false
+    }
+  ],
+  "aws": "Lambda hosts this service after deploy",
+  "invariant": "Memory is information, not authority. Remembered $700 authorization does not authorize $700 today."
+}

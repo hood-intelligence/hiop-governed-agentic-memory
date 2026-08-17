@@ -1,0 +1,18 @@
+# Local CockroachDB for genuine persistent memory demos
+services:
+  cockroach:
+    image: cockroachdb/cockroach:latest-v24.2
+    command: start-single-node --insecure --http-addr=0.0.0.0:8080
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - crdb_data:/cockroach/cockroach-data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health?ready=1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  crdb_data:
