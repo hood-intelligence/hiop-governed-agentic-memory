@@ -18,7 +18,9 @@ flowchart LR
   CC[ccloud / Cloud SQL] -.-> M
 ```
 
-Note: Managed MCP and CRDB VECTOR INDEX are **not** in the live RC1 path.
+**Maturity:** development demonstrator — not production-certified.
+
+Claim Distributed Vector Indexing only when a live CockroachDB cluster proves `VECTOR INDEX` + `<->`. Claim AWS Lambda only when a public Function URL works. Do not claim Managed MCP or ccloud unless used.
 
 ## Data plane vs control plane
 

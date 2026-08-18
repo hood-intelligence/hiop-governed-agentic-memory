@@ -6,6 +6,10 @@ HIOP Governed Agentic Memory
 ## Tagline
 CockroachDB remembers. HIOP decides. Memory never becomes authority.
 
+## Maturity (use in description)
+
+HIOP Effect Authority is a live-development-validated governed-agent runtime demonstrating durable CockroachDB persistence, tenant isolation, idempotent effects, tamper-resistant evidence receipts, receipt-chain verification, and fail-closed behavior. It is a development demonstrator and is not represented as a production-certified deployment.
+
 ## Functional demo URL
 `pending deployment`  
 *(set after Lambda Function URL works — then paste URL here and on form)*
@@ -14,10 +18,10 @@ CockroachDB remembers. HIOP decides. Memory never becomes authority.
 No credentials required. Open the demo and run the governed-memory scenario. The demonstration stores agent memory in CockroachDB, recalls prior context via distributed vector search, independently evaluates effect authority, denies unauthorized reuse of remembered authority, records human approval, and preserves the resulting decision/evidence trail.
 
 ## Public repository
-`pending GitHub publication`
+`https://github.com/hood-intelligence/hiop-governed-agentic-memory`
 
 ## License URL
-`https://github.com/<ORG>/hiop-governed-agentic-memory/blob/main/LICENSE`  
+`https://github.com/hood-intelligence/hiop-governed-agentic-memory/blob/main/LICENSE`  
 *(Apache-2.0 file in repo root)*
 
 ## CockroachDB tools used (select ONLY when claimable)
@@ -68,3 +72,4 @@ Grok (xAI)
 ## Built with
 CockroachDB, Python, HIOP Effect Authority  
 *(add AWS Lambda only after live)*
+

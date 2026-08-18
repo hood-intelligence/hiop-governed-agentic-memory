@@ -1,8 +1,0 @@
-HIOP-COCKROACH-AWS-HACKATHON-RC1.zip
-SHA-256: cfba0bc7dd9ff0d9e148ac25db08e9d5db7718870fec9ef68abc54dfc7f38564
-Updated: 2026-08-16T23:46:55.2101167-04:00
-WO: HIOP-HACKATHON-FINISH-02 QUALIFICATION GATE
-CRDB tools: Agent Skills (claimable) + Distributed Vector Indexing (code; claim on live VECTOR CRDB)
-AWS: Lambda path ready
-Exit: NOT SUBMISSION ELIGIBLE until live CRDB vector + Lambda URL + GitHub + video
-Tests: 13 passed
