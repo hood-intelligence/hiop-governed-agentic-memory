@@ -8,16 +8,39 @@ Environment:
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import sys
 from pathlib import Path
 
-# Package layout when zipped for Lambda
+# Package layout when built by AWS SAM.
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from hiop_crdb_adapter.orchestrator import GovernedMemoryAgent  # noqa: E402
+
+
+def _request_goal(event: object) -> str | None:
+    """Read a goal from direct Lambda, API Gateway, or Function URL events."""
+    if not isinstance(event, dict):
+        return None
+
+    goal = event.get("goal")
+    raw_body = event.get("body")
+    if raw_body in (None, ""):
+        return goal
+
+    try:
+        if event.get("isBase64Encoded"):
+            raw_body = base64.b64decode(raw_body).decode("utf-8")
+        body = json.loads(raw_body) if isinstance(raw_body, str) else raw_body
+    except (TypeError, ValueError, UnicodeDecodeError):
+        return goal
+
+    if isinstance(body, dict):
+        return body.get("goal", goal)
+    return goal
 
 
 def _maybe_s3_mirror(summary: dict) -> None:
@@ -39,13 +62,9 @@ def _maybe_s3_mirror(summary: dict) -> None:
 
 
 def lambda_handler(event, context):
-    goal = None
-    if isinstance(event, dict):
-        goal = event.get("goal")
     agent = GovernedMemoryAgent()
-    summary = agent.run(goal=goal)
+    summary = agent.run(goal=_request_goal(event))
     _maybe_s3_mirror(summary)
-    # slim response for API Gateway
     body = {
         "memory_backend": summary["memory_backend"],
         "goal": summary["goal"],
@@ -67,7 +86,6 @@ def lambda_handler(event, context):
     }
 
 
-# Local invoke
 if __name__ == "__main__":
     os.environ.setdefault("HIOP_MEMORY_MODE", "fixture")
     print(json.dumps(lambda_handler({"goal": "lab safe"}, None), indent=2))

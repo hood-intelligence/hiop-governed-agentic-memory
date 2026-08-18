@@ -8,9 +8,6 @@ Parameters:
     NoEcho: true
     Default: ""
     Description: CockroachDB connection URI (postgres protocol)
-  ReceiptBucketName:
-    Type: String
-    Default: hiop-crdb-receipts-staging
 
 Globals:
   Function:
@@ -22,7 +19,6 @@ Resources:
   ReceiptBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref ReceiptBucketName
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
@@ -39,11 +35,11 @@ Resources:
         Variables:
           CRDB_DSN: !Ref CrdbDsn
           HIOP_MEMORY_MODE: cockroach
-          S3_RECEIPT_BUCKET: !Ref ReceiptBucketName
+          S3_RECEIPT_BUCKET: !Ref ReceiptBucket
           HIOP_PRODUCTION_CERTIFIED: "false"
       Policies:
         - S3CrudPolicy:
-            BucketName: !Ref ReceiptBucketName
+            BucketName: !Ref ReceiptBucket
       Events:
         Api:
           Type: Api
@@ -55,3 +51,6 @@ Outputs:
   ApiUrl:
     Description: Functional demo API endpoint
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/run"
+  ReceiptBucket:
+    Description: Private S3 receipt-mirror bucket generated for this stack
+    Value: !Ref ReceiptBucket
