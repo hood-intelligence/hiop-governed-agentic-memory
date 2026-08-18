@@ -1,0 +1,26 @@
+{
+  "database": "hiop_agent_memory",
+  "steps": [
+    "schema_applied"
+  ],
+  "current_database": "hiop_agent_memory",
+  "embedding_column": [
+    "embedding",
+    "vector",
+    "vector"
+  ],
+  "show_create": "CREATE TABLE public.agent_episodes (\n\tepisode_id UUID NOT NULL DEFAULT gen_random_uuid(),\n\tagent_id STRING NOT NULL,\n\ttenant_id STRING NOT NULL,\n\tkind STRING NOT NULL,\n\tcontent JSONB NOT NULL,\n\tembedding VECTOR(8) NULL,\n\tcreated_at TIMESTAMPTZ NOT NULL DEFAULT now():::TIMESTAMPTZ,\n\tis_authority BOOL NOT NULL DEFAULT false,\n\tCONSTRAINT agent_episodes_pkey PRIMARY KEY (episode_id ASC),\n\tVECTOR INDEX idx_agent_episodes_embedding (agent_id, embedding vector_l2_ops),\n\tINDEX idx_agent_episodes_agent_time (agent_id ASC, created_at DESC),\n\tINDEX idx_agent_episodes_kind (kind ASC),\n\tCONSTRAINT check_is_authority CHECK (is_authority = false)\n) WITH (schema_locked = true) LOCALITY REGIONAL BY TABLE IN PRIMARY REGION;",
+  "vector_query_hits": [
+    {
+      "kind": "credential_seen",
+      "distance": 0.0
+    }
+  ],
+  "memory_backend": "cockroachdb",
+  "claimable": [
+    "Agent Skills Repo",
+    "Distributed Vector Indexing"
+  ],
+  "vector_tool_claimable": true,
+  "production_certified": false
+}

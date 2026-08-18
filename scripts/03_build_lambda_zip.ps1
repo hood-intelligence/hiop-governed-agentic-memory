@@ -18,6 +18,8 @@ New-Item -ItemType Directory -Force -Path (Join-Path $Stage "fixtures") | Out-Nu
 Copy-Item (Join-Path $Root "fixtures\*") (Join-Path $Stage "fixtures") -Force
 New-Item -ItemType Directory -Force -Path (Join-Path $Stage "sql") | Out-Null
 Copy-Item (Join-Path $Root "sql\*") (Join-Path $Stage "sql") -Force
+New-Item -ItemType Directory -Force -Path (Join-Path $Stage "skills") | Out-Null
+Copy-Item (Join-Path $Root "skills\*") (Join-Path $Stage "skills") -Recurse -Force
 
 # Rewrite handler top for flat layout
 $handler = @'
